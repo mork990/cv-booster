@@ -32,7 +32,7 @@
         @media print {
             body * { visibility: hidden; }
             #server-content, #server-content * { visibility: visible; }
-            #server-content { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; font-size: 12pt; line-height: 1.5; z-index: 9999; }
+            #server-content { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; font-size: 12pt; line-height: 1.6; z-index: 9999; font-family: 'Times New Roman', serif; }
             header, footer, .glass-panel, .sticky, #paypal-button-container, .paywall-overlay, #paywall, #loading-spinner { display: none !important; }
         }
     </style>
@@ -111,13 +111,11 @@
                     <div class="relative bg-gray-50 dark:bg-[#0b1120] min-h-[400px]">
                         <div id="preview-container" class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500">
                             
-                            <!-- Loading Spinner -->
                             <div id="loading-spinner" class="hidden text-center py-20">
                                 <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-500"></i>
                                 <p class="mt-4 text-slate-500">Generating document...</p>
                             </div>
 
-                            <!-- Content Area -->
                             <div id="server-content">
                                 <div id="privacy-content">
                                     <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
@@ -186,28 +184,68 @@
             const showPayments = document.getElementById('payments').checked;
 
             const privacyHTML = `
-                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
-                <p class="mb-4"><strong>Last Updated:</strong> ${date}</p>
-                <h2 class="font-bold mt-6 mb-2 text-lg">1. Introduction</h2>
-                <p class="mb-4">Welcome to <span class="font-bold text-brand-600">${company}</span> ("we", "us", or "our"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy applies to our website <span class="font-bold text-brand-600">${url}</span> (the "Service").</p>
-                <h2 class="font-bold mt-6 mb-2 text-lg">2. Information We Collect</h2>
-                <p class="mb-4">We collect personal information that you voluntarily provide to us when you register on the website, express an interest in obtaining information about us or our products and services, or otherwise when you contact us.</p>
-                ${showCookies ? `<h2 class="font-bold mt-6 mb-2 text-lg">3. Cookies and Tracking</h2><p class="mb-4">We use cookies and similar tracking technologies to access or store information.</p>` : ''}
-                ${showAds ? `<h2 class="font-bold mt-6 mb-2 text-lg">4. Advertising</h2><p class="mb-4">We use third-party advertising companies to serve ads when you visit the website.</p>` : ''}
-                ${showPayments ? `<h2 class="font-bold mt-6 mb-2 text-lg">5. Payments</h2><p class="mb-4">We process payments securely. We do not store card details.</p>` : ''}
-                <h2 class="font-bold mt-6 mb-2 text-lg">Contact Us</h2>
-                <p class="mb-4">If you have questions, email us at <span class="font-bold">${email}</span>.</p>
-                <p class="text-sm text-gray-500 mt-8 border-t pt-4">Jurisdiction: ${jurisdiction}</p>
+                <div style="font-family: 'Times New Roman', serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+                    <h1 style="text-align:center; text-transform:uppercase; margin-bottom: 40px; font-size: 24pt;">Privacy Policy</h1>
+                    <p><strong>Last Updated:</strong> ${date}</p>
+                    
+                    <h3 style="margin-top: 20px;">1. Introduction</h3>
+                    <p>Welcome to <strong>${company}</strong> ("Company", "we", "our", "us"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <strong>${url}</strong> (the "Site"). Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.</p>
+
+                    <h3 style="margin-top: 20px;">2. Collection of Your Information</h3>
+                    <p>We may collect information about you in a variety of ways. The information we may collect on the Site includes:</p>
+                    <ul>
+                        <li><strong>Personal Data:</strong> Personally identifiable information, such as your name, shipping address, email address, and telephone number, and demographic information, such as your age, gender, hometown, and interests, that you voluntarily give to us when you register with the Site or when you choose to participate in various activities related to the Site.</li>
+                        <li><strong>Derivative Data:</strong> Information our servers automatically collect when you access the Site, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the Site.</li>
+                    </ul>
+
+                    ${showCookies ? `<h3 style="margin-top: 20px;">3. Use of Cookies and Tracking Technologies</h3><p>We may use cookies, web beacons, tracking pixels, and other tracking technologies on the Site to help customize the Site and improve your experience. When you access the Site, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the Site.</p>` : ''}
+
+                    ${showAds ? `<h3 style="margin-top: 20px;">4. Third-Party Advertising</h3><p>We may use third-party advertising companies to serve ads when you visit the Site. These companies may use information about your visits to the Site and other websites that are contained in web cookies in order to provide advertisements about goods and services of interest to you.</p>` : ''}
+
+                    ${showPayments ? `<h3 style="margin-top: 20px;">5. Financial Data</h3><p>Financial information, such as data related to your payment method (e.g., valid credit card number, card brand, expiration date) that we may collect when you purchase, order, return, exchange, or request information about our services from the Site. We store only very limited, if any, financial information that we collect. Otherwise, all financial information is stored by our payment processor, and you are encouraged to review their privacy policy and contact them directly for responses to your questions.</p>` : ''}
+
+                    <h3 style="margin-top: 20px;">6. Security of Your Information</h3>
+                    <p>We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
+
+                    <h3 style="margin-top: 20px;">7. Policy for Children</h3>
+                    <p>We do not knowingly solicit information from or market to children under the age of 13. If you become aware of any data we have collected from children under age 13, please contact us using the contact information provided below.</p>
+
+                    <h3 style="margin-top: 20px;">8. Contact Us</h3>
+                    <p>If you have questions or comments about this Privacy Policy, please contact us at:</p>
+                    <p><strong>${company}</strong><br>Email: ${email}<br>Jurisdiction: ${jurisdiction}</p>
+                </div>
             `;
 
             const termsHTML = `
-                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">TERMS OF SERVICE</h1>
-                <p class="mb-4"><strong>Last Updated:</strong> ${date}</p>
-                <p class="mb-4">By accessing <span class="font-bold text-brand-600">${url}</span>, you agree to be bound by these Terms of Service.</p>
-                <h2 class="font-bold mt-6 mb-2 text-lg">1. License</h2>
-                <p class="mb-4">Permission is granted to temporarily download one copy of the materials on <span class="font-bold text-brand-600">${company}</span>'s website.</p>
-                <h2 class="font-bold mt-6 mb-2 text-lg">2. Disclaimer</h2>
-                <p class="mb-4">The materials on ${company}'s website are provided on an 'as is' basis.</p>
+                <div style="font-family: 'Times New Roman', serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+                    <h1 style="text-align:center; text-transform:uppercase; margin-bottom: 40px; font-size: 24pt;">Terms and Conditions</h1>
+                    <p><strong>Last Updated:</strong> ${date}</p>
+
+                    <h3 style="margin-top: 20px;">1. Agreement to Terms</h3>
+                    <p>These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and <strong>${company}</strong> ("Company", "we", "us", or "our"), concerning your access to and use of the <strong>${url}</strong> website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the "Site").</p>
+
+                    <h3 style="margin-top: 20px;">2. Intellectual Property Rights</h3>
+                    <p>Unless otherwise indicated, the Site is our proprietary property and all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics on the Site (collectively, the "Content") and the trademarks, service marks, and logos contained therein (the "Marks") are owned or controlled by us or licensed to us, and are protected by copyright and trademark laws and various other intellectual property rights and unfair competition laws of the United States, foreign jurisdictions, and international conventions.</p>
+
+                    <h3 style="margin-top: 20px;">3. User Representations</h3>
+                    <p>By using the Site, you represent and warrant that: (1) all registration information you submit will be true, accurate, current, and complete; (2) you will maintain the accuracy of such information and promptly update such registration information as necessary; (3) you have the legal capacity and you agree to comply with these Terms and Conditions.</p>
+
+                    <h3 style="margin-top: 20px;">4. Prohibited Activities</h3>
+                    <p>You may not access or use the Site for any purpose other than that for which we make the Site available. The Site may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.</p>
+
+                    <h3 style="margin-top: 20px;">5. Limitation of Liability</h3>
+                    <p style="text-transform: uppercase;">IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFIT, LOST REVENUE, LOSS OF DATA, OR OTHER DAMAGES ARISING FROM YOUR USE OF THE SITE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+
+                    <h3 style="margin-top: 20px;">6. Indemnification</h3>
+                    <p>You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, from and against any loss, damage, liability, claim, or demand, including reasonable attorneys’ fees and expenses, made by any third party due to or arising out of: (1) use of the Site; (2) breach of these Terms and Conditions.</p>
+
+                    <h3 style="margin-top: 20px;">7. Governing Law</h3>
+                    <p>These Terms shall be governed by and defined following the laws of <strong>${jurisdiction}</strong>. <strong>${company}</strong> and yourself irrevocably consent that the courts of <strong>${jurisdiction}</strong> shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these terms.</p>
+
+                    <h3 style="margin-top: 20px;">8. Contact Us</h3>
+                    <p>In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:</p>
+                    <p><strong>${company}</strong><br>Email: ${email}</p>
+                </div>
             `;
 
             document.getElementById('privacy-content').innerHTML = privacyHTML;
