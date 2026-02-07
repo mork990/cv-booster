@@ -192,33 +192,15 @@
                         <!-- Content Containers -->
                         <div id="preview-container" class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500">
                             
-                            <!-- Privacy Policy -->
-                            <div id="privacy-content">
-                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
-                                <p class="mb-4">Last Updated: <span id="date"></span></p>
-                                <p class="mb-4">This Privacy Policy describes how <span class="font-bold text-brand-600 company-fill">[Company]</span> collects, uses, and discloses your personal information when you visit our website <span class="font-bold text-brand-600 url-fill">[URL]</span>.</p>
-                                
-                                <div id="cookies-section" class="hidden">
-                                    <h2 class="font-bold mt-4">1. Cookies</h2>
-                                    <p>We use cookies to improve your experience.</p>
-                                </div>
-                                <div id="ads-section" class="hidden">
-                                    <h2 class="font-bold mt-4">2. Advertising</h2>
-                                    <p>We work with third-party ad partners.</p>
-                                </div>
-                                <div id="payments-section" class="hidden">
-                                    <h2 class="font-bold mt-4">3. Payments</h2>
-                                    <p>We process payments securely via Stripe/PayPal.</p>
-                                </div>
+                            <div id="loading-spinner" class="hidden text-center py-20">
+                                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-500"></i>
+                                <p class="mt-4 text-slate-500">Generating secure document on server...</p>
                             </div>
 
-                            <!-- Terms of Service -->
-                            <div id="terms-content" class="hidden">
-                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">TERMS OF SERVICE</h1>
-                                <p class="mb-4">Last Updated: <span id="date-terms"></span></p>
-                                <p class="mb-4">By accessing <span class="font-bold text-brand-600 url-fill">[URL]</span>, you agree to be bound by these Terms of Service.</p>
-                                <h2 class="font-bold mt-4">1. License</h2>
-                                <p>Permission is granted to temporarily download one copy of the materials on <span class="font-bold text-brand-600 company-fill">[Company]</span>'s website.</p>
+                            <div id="server-content">
+                                <!-- Content will be injected by Server ONLY -->
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PREVIEW MODE</h1>
+                                <p>Fill the form to generate a secure preview...</p>
                             </div>
 
                         </div>
@@ -310,20 +292,47 @@
             });
         }
 
-        // Auto-Save & Update
-        function updateDoc() {
-            const company = document.getElementById('companyName').value || '[Company]';
-            const url = document.getElementById('websiteUrl').value || '[URL]';
+        // Server-Side Generation
+        async function updateDoc() {
+            const data = {
+                company: document.getElementById('companyName').value,
+                url: document.getElementById('websiteUrl').value,
+                email: document.getElementById('contactEmail').value,
+                jurisdiction: document.getElementById('jurisdiction').value,
+                cookies: document.getElementById('cookies').checked,
+                ads: document.getElementById('ads').checked,
+                payments: document.getElementById('payments').checked
+            };
             
-            document.querySelectorAll('.company-fill').forEach(el => el.innerText = company);
-            document.querySelectorAll('.url-fill').forEach(el => el.innerText = url);
-
-            // Toggles
-            document.getElementById('cookies-section').classList.toggle('hidden', !document.getElementById('cookies').checked);
-            document.getElementById('ads-section').classList.toggle('hidden', !document.getElementById('ads').checked);
-            document.getElementById('payments-section').classList.toggle('hidden', !document.getElementById('payments').checked);
-
-            saveProgress();
+            // Show loading state
+            const container = document.getElementById('server-content');
+            
+            // Debounce: Only call server if user stopped typing for 1s (to save API calls)
+            if (window.debounceTimer) clearTimeout(window.debounceTimer);
+            window.debounceTimer = setTimeout(async () => {
+                
+                try {
+                    const response = await fetch('/.netlify/functions/generate', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Render Markdown to simple HTML (basic regex for now)
+                        let html = result.document
+                            .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold mb-4">$1</h1>')
+                            .replace(/^## (.*$)/gim, '<h2 class="font-bold mt-4">$1</h2>')
+                            .replace(/\n/gim, '<br>');
+                            
+                        container.innerHTML = html;
+                    }
+                } catch (e) {
+                    console.error("Server Error", e);
+                }
+                
+                saveProgress();
+            }, 800);
         }
 
         function saveProgress() {
