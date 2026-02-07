@@ -9,15 +9,25 @@
         :root { --primary: #0f172a; --accent: #d4af37; --bg: #f8fafc; --surface: #ffffff; --text: #334155; --border: #e2e8f0; }
         
         * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* Mobile Header */
-        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 10; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0; letter-spacing: 0.5px; }
-        .badge { background: var(--accent); color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 10; position: sticky; top: 0; }
+        
+        /* ... (rest of CSS) */
 
         /* Main Layout */
-        main { flex: 1; display: flex; overflow: hidden; position: relative; }
+        main { flex: 1; display: flex; flex-direction: column; }
+        
+        @media (min-width: 900px) {
+            main { flex-direction: row; height: calc(100vh - 60px); }
+            .panel { overflow-y: auto; height: 100%; }
+        }
+
+        /* Blur Protection */
+        .protected-content { filter: blur(4px); user-select: none; pointer-events: none; opacity: 0.6; }
+        .paywall-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 100; width: 80%; max-width: 400px; border: 1px solid var(--accent); }
+        .paywall-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 15px; }
 
         /* Tabs (Mobile Only) */
         .tabs { display: none; background: white; border-bottom: 1px solid var(--border); }
@@ -128,9 +138,17 @@
 
     <!-- Preview Panel -->
     <div class="panel preview" id="previewPanel">
-        <div class="paper" id="docContent">
-            <div class="paper-header">
-                <h1>PRIVACY POLICY</h1>
+        <div class="paper" style="position:relative;">
+            <!-- Paywall Overlay -->
+            <div class="paywall-overlay" id="paywall">
+                <div class="paywall-title">🔒 Premium Content</div>
+                <p style="margin-bottom:20px; color:#555;">To view and download the full legal document, please purchase a license.</p>
+                <button class="btn" onclick="downloadPDF()">Get Access • $19</button>
+            </div>
+
+            <div id="docContent" class="protected-content">
+                <div class="paper-header">
+                    <h1>PRIVACY POLICY</h1>
                 <span class="paper-date" id="date">February 7, 2026</span>
             </div>
 
