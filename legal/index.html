@@ -28,6 +28,12 @@
         body { font-family: 'Inter', sans-serif; }
         .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.3); }
         .dark .glass-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); }
+        @media print {
+            body * { visibility: hidden; }
+            #server-content, #server-content * { visibility: visible; }
+            #server-content { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; font-size: 12pt; line-height: 1.5; }
+            header, footer, .glass-panel, .sticky, #paypal-button-container { display: none !important; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-slate-800 dark:bg-dark-bg dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
@@ -147,10 +153,13 @@
 
         // Logic
         async function updateDoc() {
-            const company = document.getElementById('companyName').value;
-            const url = document.getElementById('websiteUrl').value;
+            const company = document.getElementById('companyName').value || '[Company Name]';
+            const url = document.getElementById('websiteUrl').value || '[Website URL]';
+            const email = document.getElementById('contactEmail').value || '[Contact Email]';
+            const jurisdiction = document.getElementById('jurisdiction').value || '[Jurisdiction]';
             const cookies = document.getElementById('cookies').checked;
             const ads = document.getElementById('ads').checked;
+            const payments = document.getElementById('payments').checked;
 
             // Show loading
             document.getElementById('server-content').classList.add('hidden');
@@ -161,7 +170,7 @@
                 try {
                     const response = await fetch('/.netlify/functions/generate', {
                         method: 'POST',
-                        body: JSON.stringify({ company, url, cookies, ads })
+                        body: JSON.stringify({ company, url, email, jurisdiction, cookies, ads, payments })
                     });
                     const result = await response.json();
                     
