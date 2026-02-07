@@ -6,6 +6,25 @@
     <title>LegalShield | Premium Policy Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Pulse Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .pulse-btn { animation: pulse 2s infinite; }
+
+        /* Trust Badges */
+        .fa-solid { font-size: 1.2rem; }
+
+        /* FAQ Section (Bottom) */
+        .faq-section { margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee; }
+        .faq-item { margin-bottom: 20px; }
+        .faq-q { font-weight: bold; margin-bottom: 5px; cursor: pointer; color: var(--primary); }
+        .faq-a { font-size: 0.9em; color: #666; display: none; }
+        .faq-open .faq-a { display: block; }
+        
+        /* Rest of CSS... */
         :root { --primary: #0f172a; --accent: #d4af37; --bg: #f8fafc; --surface: #ffffff; --text: #334155; --border: #e2e8f0; }
         
         * { box-sizing: border-box; }
@@ -143,7 +162,12 @@
             <div class="paywall-overlay" id="paywall">
                 <div class="paywall-title">🔒 Premium Content</div>
                 <p style="margin-bottom:20px; color:#555;">To view and download the full legal document, please purchase a license.</p>
-                <button class="btn" onclick="downloadPDF()">Get Access • $19</button>
+                <button class="btn pulse-btn" onclick="downloadPDF()">Get Access • $19</button>
+                <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px; opacity: 0.7;">
+                    <i class="fa-solid fa-shield-halved" title="Secure"></i>
+                    <i class="fa-solid fa-lock" title="Encrypted"></i>
+                    <span style="font-size: 0.8em; font-weight: bold;">GDPR READY</span>
+                </div>
             </div>
 
             <div id="docContent" class="protected-content">
@@ -230,5 +254,26 @@
     document.getElementById('date').innerText = new Date().toLocaleDateString('en-US', options);
 </script>
 
+    <!-- FAQ Section -->
+    <div style="background: #f8fafc; padding: 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+        <h3 style="margin-bottom: 20px;">Why Choose LegalShield?</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto;">
+            <div>
+                <i class="fa-solid fa-check-circle" style="color: green;"></i>
+                <h4>GDPR Compliant</h4>
+                <p style="font-size: 0.9em; color: #666;">Meets strict EU privacy standards.</p>
+            </div>
+            <div>
+                <i class="fa-solid fa-lock" style="color: blue;"></i>
+                <h4>Secure</h4>
+                <p style="font-size: 0.9em; color: #666;">No data leaves your browser.</p>
+            </div>
+            <div>
+                <i class="fa-solid fa-bolt" style="color: orange;"></i>
+                <h4>Instant</h4>
+                <p style="font-size: 0.9em; color: #666;">Ready in 2 minutes.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
