@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy & Terms Generator | LegalShield</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #2980b9; --bg: #ecf0f1; --border: #bdc3c7; }
+        body { font-family: 'Georgia', serif; margin: 0; padding: 0; background: var(--bg); color: var(--primary); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Left Panel: Form */
+        .editor { width: 40%; padding: 40px; background: white; border-right: 1px solid var(--border); overflow-y: auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        h1 { font-size: 1.8em; margin-bottom: 10px; color: var(--accent); }
+        .subtitle { font-size: 0.9em; color: #7f8c8d; margin-bottom: 30px; }
+        
+        label { display: block; margin-top: 20px; font-weight: 600; font-size: 0.9em; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 1em; }
+        
+        .toggle-group { margin-top: 25px; display: flex; align-items: center; justify-content: space-between; }
+        .toggle-label { font-weight: normal; font-size: 0.95em; color: #34495e; }
+        
+        /* Switch */
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        .btn { display: block; width: 100%; padding: 15px; margin-top: 40px; background: var(--accent); color: white; text-align: center; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn:hover { background: #1f618d; }
+        .btn-secondary { background: white; color: var(--accent); border: 2px solid var(--accent); margin-top: 15px; }
+
+        /* Right Panel: Preview */
+        .preview { width: 60%; padding: 60px; background: #fff; overflow-y: auto; position: relative; }
+        .paper { max-width: 800px; margin: 0 auto; line-height: 1.6; font-size: 1em; color: #2c3e50; }
+        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 6em; color: rgba(0,0,0,0.05); font-weight: bold; pointer-events: none; z-index: 0; }
+        
+        /* Legal Text Styles */
+        .legal-header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        h2 { font-size: 1.4em; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        p { margin-bottom: 15px; }
+        
+        /* Blur Effect for Free Version */
+        .blur-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(transparent, white); pointer-events: none; display: none; }
+        
+    </style>
+</head>
+<body>
+
+<!-- Left Panel: Editor -->
+<div class="editor">
+    <h1>Create Your Legal Docs</h1>
+    <p class="subtitle">Generate professional Privacy Policy & Terms in minutes.</p>
+
+    <label>Company Name</label>
+    <input type="text" id="companyName" placeholder="e.g. Acme Corp" oninput="updateDoc()">
+
+    <label>Website URL</label>
+    <input type="text" id="websiteUrl" placeholder="https://example.com" oninput="updateDoc()">
+
+    <label>Contact Email</label>
+    <input type="email" id="contactEmail" placeholder="support@example.com" oninput="updateDoc()">
+
+    <label>Jurisdiction (Country/State)</label>
+    <input type="text" id="jurisdiction" placeholder="e.g. California, USA" oninput="updateDoc()">
+
+    <div class="toggle-group">
+        <span class="toggle-label">Do you use Cookies?</span>
+        <label class="switch"><input type="checkbox" id="cookies" onchange="updateDoc()"><span class="slider"></span></label>
+    </div>
+
+    <div class="toggle-group">
+        <span class="toggle-label">Do you show Ads (Google/FB)?</span>
+        <label class="switch"><input type="checkbox" id="ads" onchange="updateDoc()"><span class="slider"></span></label>
+    </div>
+
+    <div class="toggle-group">
+        <span class="toggle-label">Do you collect Payments?</span>
+        <label class="switch"><input type="checkbox" id="payments" onchange="updateDoc()"><span class="slider"></span></label>
+    </div>
+
+    <button class="btn" onclick="downloadPDF()">Download Official PDF ($19)</button>
+    <button class="btn btn-secondary" onclick="copyText()">Copy to Clipboard (Free Preview)</button>
+</div>
+
+<!-- Right Panel: Document Preview -->
+<div class="preview" id="previewArea">
+    <div class="watermark">DRAFT</div>
+    <div class="paper" id="docContent">
+        <div class="legal-header">
+            <h1 style="margin:0;">PRIVACY POLICY</h1>
+            <p>Last Updated: <span id="date">February 7, 2026</span></p>
+        </div>
+
+        <p>This Privacy Policy describes how <span class="company-fill">[Company Name]</span> ("we", "us", or "our") collects, uses, and discloses your personal information when you visit our website <span class="url-fill">[Website URL]</span> (the "Service").</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>We collect information that you provide directly to us, such as when you create an account, subscribe to our newsletter, or contact customer support.</p>
+        
+        <div id="cookies-section" style="display:none;">
+            <h2>2. Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar tracking technologies to track the activity on our Service and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+        </div>
+
+        <div id="ads-section" style="display:none;">
+            <h2>3. Advertising Partners</h2>
+            <p>We work with third-party advertising partners (such as Google AdSense and Facebook Audience Network) to serve ads on our Service. These partners may use cookies and web beacons to collect information about your activities on this and other websites to provide you with targeted advertising.</p>
+        </div>
+
+        <div id="payments-section" style="display:none;">
+            <h2>4. Payments and Transactions</h2>
+            <p>We may provide paid products and/or services within the Service. In that case, we use third-party services for payment processing (e.g. Stripe, PayPal). We will not store or collect your payment card details. That information is provided directly to our third-party payment processors whose use of your personal information is governed by their Privacy Policy.</p>
+        </div>
+
+        <h2>5. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please contact us at: <span class="email-fill">[Email Address]</span>.</p>
+        
+        <p style="margin-top: 50px; font-size: 0.8em; color: #999;">Jurisdiction: <span class="jurisdiction-fill">[Location]</span></p>
+    </div>
+</div>
+
+<script>
+    // Real-time updates
+    function updateDoc() {
+        const company = document.getElementById('companyName').value || '[Company Name]';
+        const url = document.getElementById('websiteUrl').value || '[Website URL]';
+        const email = document.getElementById('contactEmail').value || '[Email Address]';
+        const jurisdiction = document.getElementById('jurisdiction').value || '[Location]';
+
+        document.querySelectorAll('.company-fill').forEach(el => el.innerText = company);
+        document.querySelectorAll('.url-fill').forEach(el => el.innerText = url);
+        document.querySelectorAll('.email-fill').forEach(el => el.innerText = email);
+        document.querySelectorAll('.jurisdiction-fill').forEach(el => el.innerText = jurisdiction);
+
+        // Toggles
+        document.getElementById('cookies-section').style.display = document.getElementById('cookies').checked ? 'block' : 'none';
+        document.getElementById('ads-section').style.display = document.getElementById('ads').checked ? 'block' : 'none';
+        document.getElementById('payments-section').style.display = document.getElementById('payments').checked ? 'block' : 'none';
+    }
+
+    function downloadPDF() {
+        // Here we would integrate Stripe checkout before allowing download
+        alert("Redirecting to secure payment ($19)...");
+        window.location.href = "https://buy.stripe.com/YOUR_LINK_HERE"; 
+    }
+
+    function copyText() {
+        const text = document.getElementById('docContent').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Draft copied to clipboard!");
+        });
+    }
+
+    // Set today's date
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('date').innerText = new Date().toLocaleDateString('en-US', options);
+</script>
+
+</body>
+</html>
