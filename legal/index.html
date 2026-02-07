@@ -91,18 +91,14 @@
                     <div class="relative bg-gray-50 dark:bg-[#0b1120] min-h-[400px]">
                         <div id="preview-container" class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500">
                             
-                            <!-- Privacy Policy -->
-                            <div id="privacy-content">
-                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
-                                <p class="mb-4">This Privacy Policy describes how <span class="font-bold text-brand-600 company-fill">[Company]</span> collects, uses, and discloses your personal information when you visit our website <span class="font-bold text-brand-600 url-fill">[URL]</span>.</p>
-                                <div id="cookies-section" class="hidden"><h2 class="font-bold mt-4">1. Cookies</h2><p>We use cookies to improve your experience.</p></div>
-                                <div id="ads-section" class="hidden"><h2 class="font-bold mt-4">2. Advertising</h2><p>We work with third-party ad partners.</p></div>
+                            <div id="loading-spinner" class="hidden text-center py-20">
+                                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-500"></i>
+                                <p class="mt-4 text-slate-500">Generating secure document...</p>
                             </div>
 
-                            <!-- Terms -->
-                            <div id="terms-content" class="hidden">
-                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">TERMS OF SERVICE</h1>
-                                <p class="mb-4">By accessing <span class="font-bold text-brand-600 url-fill">[URL]</span>, you agree to be bound by these Terms of Service.</p>
+                            <div id="server-content">
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PREVIEW MODE</h1>
+                                <p>This content is generated securely by our server.</p>
                             </div>
                         </div>
 
@@ -129,7 +125,7 @@
             style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' },
             createOrder: function(data, actions) {
                 return actions.order.create({
-                    purchase_units: [{ amount: { value: '19.00' }, description: "LegalShield License" }]
+                    purchase_units: [{ amount: { value: '19.00' }, description: "LegalShield Premium License" }]
                 });
             },
             onApprove: function(data, actions) {
@@ -150,20 +146,46 @@
         }).render('#paypal-button-container');
 
         // Logic
-        function updateDoc() {
-            const company = document.getElementById('companyName').value || '[Company]';
-            const url = document.getElementById('websiteUrl').value || '[URL]';
-            document.querySelectorAll('.company-fill').forEach(el => el.innerText = company);
-            document.querySelectorAll('.url-fill').forEach(el => el.innerText = url);
-            document.getElementById('cookies-section').classList.toggle('hidden', !document.getElementById('cookies').checked);
-            document.getElementById('ads-section').classList.toggle('hidden', !document.getElementById('ads').checked);
-            saveProgress();
+        async function updateDoc() {
+            const company = document.getElementById('companyName').value;
+            const url = document.getElementById('websiteUrl').value;
+            const cookies = document.getElementById('cookies').checked;
+            const ads = document.getElementById('ads').checked;
+
+            // Show loading
+            document.getElementById('server-content').classList.add('hidden');
+            document.getElementById('loading-spinner').classList.remove('hidden');
+
+            if (window.debounceTimer) clearTimeout(window.debounceTimer);
+            window.debounceTimer = setTimeout(async () => {
+                try {
+                    const response = await fetch('/.netlify/functions/generate', {
+                        method: 'POST',
+                        body: JSON.stringify({ company, url, cookies, ads })
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        let html = result.document
+                            .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold mb-4">$1</h1>')
+                            .replace(/^## (.*$)/gim, '<h2 class="font-bold mt-4">$1</h2>')
+                            .replace(/\n/gim, '<br>');
+                        document.getElementById('server-content').innerHTML = html;
+                    }
+                } catch(e) { console.error(e); }
+                
+                document.getElementById('loading-spinner').classList.add('hidden');
+                document.getElementById('server-content').classList.remove('hidden');
+                saveProgress();
+            }, 800);
         }
 
         function switchTab(tabId) {
-            document.getElementById('privacy-content').classList.toggle('hidden', tabId !== 'privacy');
-            document.getElementById('terms-content').classList.toggle('hidden', tabId !== 'terms');
-            // Update button styles logic here (simplified for brevity)
+            // Simplified tab switching for brevity
+            document.querySelectorAll('.desktop-tab-btn').forEach(btn => {
+                if (btn.dataset.target === tabId) btn.classList.add('border-l-brand-600');
+                else btn.classList.remove('border-l-brand-600');
+            });
         }
 
         function saveProgress() {
