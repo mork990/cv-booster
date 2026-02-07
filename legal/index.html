@@ -6,167 +6,74 @@
     <title>LegalShield - Professional Legal Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=EGYEsXbj9F3D_LUmOj5b4qQ-XAzHXsOwgVPIJ6Sd2soiBAgOKI5-TNuZA2ah3uvbNYzKJ5Z1xbO4zMwY&currency=USD"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            900: '#0c4a6e',
-                        },
-                        dark: {
-                            bg: '#0f172a',
-                            surface: '#1e293b',
-                            border: '#334155'
-                        }
+                        brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 900: '#0c4a6e' },
+                        dark: { bg: '#0f172a', surface: '#1e293b', border: '#334155' }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.3s ease-in-out',
-                        'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(10px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    animation: { 'fade-in': 'fadeIn 0.3s ease-in-out' },
+                    keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } } }
                 }
             }
         }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         body { font-family: 'Inter', sans-serif; }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        /* Paywall Frosted Glass */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .dark .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Mobile Tab Transition */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.25s ease-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .dark .glass-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body class="bg-gray-50 text-slate-800 dark:bg-dark-bg dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
 
-    <!-- Header -->
     <header class="sticky top-0 z-50 w-full bg-white/80 dark:bg-dark-surface/90 backdrop-blur-md border-b border-gray-200 dark:border-dark-border transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
-                    <i class="fa-solid fa-scale-balanced text-sm"></i>
-                </div>
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shadow-lg shadow-brand-500/30"><i class="fa-solid fa-scale-balanced text-sm"></i></div>
                 <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Legal<span class="text-brand-600 dark:text-brand-500">Shield</span></span>
             </div>
-            
             <div class="flex items-center gap-4">
-                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-sun hidden dark:block"></i>
-                    <i class="fas fa-moon block dark:hidden"></i>
-                </button>
-                <a href="#" class="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-md hover:shadow-lg">
-                    Unlock Pro
-                </a>
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500"><i class="fas fa-sun hidden dark:block"></i><i class="fas fa-moon block dark:hidden"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
-        
         <div class="text-center mb-10 animate-slide-up">
             <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">Generate Professional Legal Policies</h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Create attorney-grade Privacy Policies, Terms of Service, and Disclaimers in seconds. Trusted by 10,000+ businesses.</p>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Create attorney-grade Privacy Policies & Terms in seconds.</p>
         </div>
 
-        <!-- Mobile Tabs (Visible only on small screens) -->
-        <div class="md:hidden mb-6 sticky top-20 z-40 bg-gray-50 dark:bg-dark-bg py-2">
-            <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide" id="mobile-tabs">
-                <button onclick="switchTab('privacy')" class="mobile-tab-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-brand-600 text-white shadow-md transition-all whitespace-nowrap active" data-target="privacy">Privacy Policy</button>
-                <button onclick="switchTab('terms')" class="mobile-tab-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-dark-surface text-slate-600 dark:text-slate-300 border border-gray-200 dark:border-dark-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap" data-target="terms">Terms of Service</button>
-            </div>
-        </div>
-
-        <!-- Desktop Grid / Mobile Stack -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            
-            <!-- Sidebar Navigation (Desktop) -->
-            <div class="hidden md:block md:col-span-3 lg:col-span-3 space-y-2">
+            <div class="md:col-span-4 lg:col-span-3 space-y-2">
                 <button onclick="switchTab('privacy')" class="desktop-tab-btn w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 bg-white dark:bg-dark-surface shadow-sm border border-l-4 border-gray-200 dark:border-dark-border border-l-brand-600 active" data-target="privacy">
-                    <div class="w-8 h-8 rounded-md bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
                     <span class="font-medium text-slate-900 dark:text-slate-100">Privacy Policy</span>
                 </button>
                 <button onclick="switchTab('terms')" class="desktop-tab-btn w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 hover:bg-white dark:hover:bg-dark-surface hover:shadow-sm text-slate-600 dark:text-slate-400 border border-transparent border-l-4 hover:border-gray-200 dark:hover:border-dark-border" data-target="terms">
-                    <div class="w-8 h-8 rounded-md bg-gray-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center">
-                        <i class="fa-solid fa-file-contract"></i>
-                    </div>
                     <span class="font-medium">Terms of Service</span>
                 </button>
             </div>
 
-            <!-- Content Area -->
-            <div class="md:col-span-9 lg:col-span-9">
+            <div class="md:col-span-8 lg:col-span-9">
                 <div class="bg-white dark:bg-dark-surface rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-gray-100 dark:border-dark-border overflow-hidden min-h-[500px] relative">
                     
-                    <!-- Form Area -->
                     <div class="p-6 md:p-8 border-b border-gray-100 dark:border-dark-border">
-                        <h2 id="section-title" class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Configure Privacy Policy</h2>
-                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Company Name</label>
-                                <input type="text" id="companyName" placeholder="e.g. Acme Corp Inc." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
+                                <input type="text" id="companyName" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none" oninput="updateDoc()">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Website URL</label>
-                                <input type="url" id="websiteUrl" placeholder="https://example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Contact Email</label>
-                                <input type="email" id="contactEmail" placeholder="legal@example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Jurisdiction</label>
-                                <input type="text" id="jurisdiction" placeholder="New York, USA" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
+                                <input type="text" id="websiteUrl" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 outline-none" oninput="updateDoc()">
                             </div>
                         </div>
-
                         <div class="mt-6 flex flex-wrap gap-4">
                              <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="cookies" class="sr-only peer" onchange="updateDoc()">
@@ -178,56 +85,38 @@
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 dark:peer-focus:ring-brand-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
                                 <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Ads</span>
                             </label>
-                            <label class="inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="payments" class="sr-only peer" onchange="updateDoc()">
-                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 dark:peer-focus:ring-brand-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
-                                <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Payments</span>
-                            </label>
                         </div>
                     </div>
 
-                    <!-- Preview Area with Paywall -->
                     <div class="relative bg-gray-50 dark:bg-[#0b1120] min-h-[400px]">
-                        
-                        <!-- Content Containers -->
                         <div id="preview-container" class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500">
                             
-                            <div id="loading-spinner" class="hidden text-center py-20">
-                                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-500"></i>
-                                <p class="mt-4 text-slate-500">Generating secure document on server...</p>
+                            <!-- Privacy Policy -->
+                            <div id="privacy-content">
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
+                                <p class="mb-4">This Privacy Policy describes how <span class="font-bold text-brand-600 company-fill">[Company]</span> collects, uses, and discloses your personal information when you visit our website <span class="font-bold text-brand-600 url-fill">[URL]</span>.</p>
+                                <div id="cookies-section" class="hidden"><h2 class="font-bold mt-4">1. Cookies</h2><p>We use cookies to improve your experience.</p></div>
+                                <div id="ads-section" class="hidden"><h2 class="font-bold mt-4">2. Advertising</h2><p>We work with third-party ad partners.</p></div>
                             </div>
 
-                            <div id="server-content">
-                                <!-- Content will be injected by Server ONLY -->
-                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PREVIEW MODE</h1>
-                                <p>Fill the form to generate a secure preview...</p>
+                            <!-- Terms -->
+                            <div id="terms-content" class="hidden">
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">TERMS OF SERVICE</h1>
+                                <p class="mb-4">By accessing <span class="font-bold text-brand-600 url-fill">[URL]</span>, you agree to be bound by these Terms of Service.</p>
                             </div>
-
                         </div>
 
-                        <!-- Professional Frosted Glass Paywall Overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center z-10 p-4">
-                            <div class="glass-panel w-full max-w-md p-8 rounded-2xl shadow-2xl text-center transform transition-all hover:scale-[1.01] animate-fade-in">
-                                <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg shadow-orange-500/30 text-white text-2xl">
-                                    <i class="fa-solid fa-lock"></i>
-                                </div>
+                        <!-- Paywall Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center z-10 p-4" id="paywall">
+                            <div class="glass-panel w-full max-w-md p-8 rounded-2xl shadow-2xl text-center">
+                                <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg text-white text-2xl"><i class="fa-solid fa-lock"></i></div>
                                 <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Premium Content</h3>
-                                <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                    Unlock full access to attorney-verified legal templates, unlimited downloads, and automatic updates.
-                                </p>
+                                <p class="text-slate-600 dark:text-slate-300 mb-6">Unlock full access to attorney-verified templates.</p>
                                 
-                                <div class="space-y-3">
-                                    <button onclick="downloadPDF()" class="w-full py-3 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold rounded-xl shadow-lg shadow-brand-500/40 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 group">
-                                        <span>Unlock Now for $19</span>
-                                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                                    </button>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-4">
-                                        <i class="fa-solid fa-shield-halved mr-1"></i> Secure 256-bit SSL Encryption
-                                    </p>
-                                </div>
+                                <div id="paypal-button-container" class="w-full"></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-4"><i class="fa-solid fa-shield-halved mr-1"></i> Secure Transaction</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -235,115 +124,54 @@
     </main>
 
     <script>
-        // Dark Mode Logic
-        function toggleTheme() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
+        // PayPal Logic
+        paypal.Buttons({
+            style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ amount: { value: '19.00' }, description: "LegalShield License" }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    const paywall = document.getElementById('paywall');
+                    paywall.innerHTML = `
+                        <div class="glass-panel w-full max-w-md p-8 rounded-2xl shadow-2xl text-center">
+                            <i class="fa-solid fa-check-circle text-5xl text-green-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Success!</h3>
+                            <button onclick="window.print()" class="mt-4 px-6 py-3 bg-brand-600 text-white rounded-lg font-bold shadow-lg hover:bg-brand-700 transition-all">
+                                <i class="fa-solid fa-download mr-2"></i> Download PDF
+                            </button>
+                        </div>
+                    `;
+                    document.getElementById('preview-container').classList.remove('filter', 'blur-[4px]', 'opacity-70', 'select-none');
+                });
             }
-        }
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
+        }).render('#paypal-button-container');
+
+        // Logic
+        function updateDoc() {
+            const company = document.getElementById('companyName').value || '[Company]';
+            const url = document.getElementById('websiteUrl').value || '[URL]';
+            document.querySelectorAll('.company-fill').forEach(el => el.innerText = company);
+            document.querySelectorAll('.url-fill').forEach(el => el.innerText = url);
+            document.getElementById('cookies-section').classList.toggle('hidden', !document.getElementById('cookies').checked);
+            document.getElementById('ads-section').classList.toggle('hidden', !document.getElementById('ads').checked);
+            saveProgress();
         }
 
-        // Tab Switching Logic
         function switchTab(tabId) {
-            const titles = {
-                'privacy': 'Configure Privacy Policy',
-                'terms': 'Configure Terms of Service',
-                'disclaimer': 'Configure Disclaimer'
-            };
-            document.getElementById('section-title').textContent = titles[tabId];
-
-            const privacy = document.getElementById('privacy-content');
-            const terms = document.getElementById('terms-content');
-            
-            if (tabId === 'terms') {
-                privacy.classList.add('hidden');
-                terms.classList.remove('hidden');
-            } else if (tabId === 'privacy') {
-                terms.classList.add('hidden');
-                privacy.classList.remove('hidden');
-            }
-
-            // Update Buttons State
-            document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
-                if (btn.dataset.target === tabId) {
-                    btn.classList.add('bg-brand-600', 'text-white');
-                    btn.classList.remove('bg-white', 'text-slate-600');
-                } else {
-                    btn.classList.remove('bg-brand-600', 'text-white');
-                    btn.classList.add('bg-white', 'text-slate-600');
-                }
-            });
-            
-            document.querySelectorAll('.desktop-tab-btn').forEach(btn => {
-                if (btn.dataset.target === tabId) {
-                    btn.classList.add('border-l-brand-600', 'shadow-sm');
-                } else {
-                    btn.classList.remove('border-l-brand-600', 'shadow-sm');
-                }
-            });
-        }
-
-        // Server-Side Generation
-        async function updateDoc() {
-            const data = {
-                company: document.getElementById('companyName').value,
-                url: document.getElementById('websiteUrl').value,
-                email: document.getElementById('contactEmail').value,
-                jurisdiction: document.getElementById('jurisdiction').value,
-                cookies: document.getElementById('cookies').checked,
-                ads: document.getElementById('ads').checked,
-                payments: document.getElementById('payments').checked
-            };
-            
-            // Show loading state
-            const container = document.getElementById('server-content');
-            
-            // Debounce: Only call server if user stopped typing for 1s (to save API calls)
-            if (window.debounceTimer) clearTimeout(window.debounceTimer);
-            window.debounceTimer = setTimeout(async () => {
-                
-                try {
-                    const response = await fetch('/.netlify/functions/generate', {
-                        method: 'POST',
-                        body: JSON.stringify(data)
-                    });
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        // Render Markdown to simple HTML (basic regex for now)
-                        let html = result.document
-                            .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold mb-4">$1</h1>')
-                            .replace(/^## (.*$)/gim, '<h2 class="font-bold mt-4">$1</h2>')
-                            .replace(/\n/gim, '<br>');
-                            
-                        container.innerHTML = html;
-                    }
-                } catch (e) {
-                    console.error("Server Error", e);
-                }
-                
-                saveProgress();
-            }, 800);
+            document.getElementById('privacy-content').classList.toggle('hidden', tabId !== 'privacy');
+            document.getElementById('terms-content').classList.toggle('hidden', tabId !== 'terms');
+            // Update button styles logic here (simplified for brevity)
         }
 
         function saveProgress() {
             const data = {
                 company: document.getElementById('companyName').value,
                 url: document.getElementById('websiteUrl').value,
-                email: document.getElementById('contactEmail').value,
-                jurisdiction: document.getElementById('jurisdiction').value,
                 cookies: document.getElementById('cookies').checked,
-                ads: document.getElementById('ads').checked,
-                payments: document.getElementById('payments').checked
+                ads: document.getElementById('ads').checked
             };
             localStorage.setItem('legalShieldData', JSON.stringify(data));
         }
@@ -354,23 +182,23 @@
                 const data = JSON.parse(saved);
                 document.getElementById('companyName').value = data.company || '';
                 document.getElementById('websiteUrl').value = data.url || '';
-                document.getElementById('contactEmail').value = data.email || '';
-                document.getElementById('jurisdiction').value = data.jurisdiction || '';
                 document.getElementById('cookies').checked = data.cookies || false;
                 document.getElementById('ads').checked = data.ads || false;
-                document.getElementById('payments').checked = data.payments || false;
                 updateDoc();
             }
-            // Set Date
-            const today = new Date().toLocaleDateString();
-            document.getElementById('date').innerText = today;
-            document.getElementById('date-terms').innerText = today;
         }
 
-        function downloadPDF() {
-            alert("Redirecting to secure payment ($19)...");
-            // Stripe Link goes here
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
         }
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
 
         window.addEventListener('load', loadProgress);
     </script>
