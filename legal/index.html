@@ -31,8 +31,8 @@
         @media print {
             body * { visibility: hidden; }
             #server-content, #server-content * { visibility: visible; }
-            #server-content { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; font-size: 12pt; line-height: 1.5; }
-            header, footer, .glass-panel, .sticky, #paypal-button-container { display: none !important; }
+            #server-content { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; font-size: 12pt; line-height: 1.5; z-index: 9999; }
+            header, footer, .glass-panel, .sticky, #paypal-button-container, .paywall-overlay, #paywall { display: none !important; }
         }
     </style>
 </head>
