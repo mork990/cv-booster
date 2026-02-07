@@ -122,7 +122,7 @@
     <script>
         // PayPal Logic
         paypal.Buttons({
-            style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' },
+            style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', height: 45 },
             createOrder: function(data, actions) {
                 return actions.order.create({
                     purchase_units: [{ amount: { value: '19.00' }, description: "LegalShield Premium License" }]
