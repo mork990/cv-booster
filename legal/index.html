@@ -99,7 +99,7 @@
                     <i class="fas fa-moon block dark:hidden"></i>
                 </button>
                 <a href="#" class="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-md hover:shadow-lg">
-                    Sign In
+                    Unlock Pro
                 </a>
             </div>
         </div>
@@ -118,7 +118,6 @@
             <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide" id="mobile-tabs">
                 <button onclick="switchTab('privacy')" class="mobile-tab-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-brand-600 text-white shadow-md transition-all whitespace-nowrap active" data-target="privacy">Privacy Policy</button>
                 <button onclick="switchTab('terms')" class="mobile-tab-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-dark-surface text-slate-600 dark:text-slate-300 border border-gray-200 dark:border-dark-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap" data-target="terms">Terms of Service</button>
-                <button onclick="switchTab('disclaimer')" class="mobile-tab-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-dark-surface text-slate-600 dark:text-slate-300 border border-gray-200 dark:border-dark-border hover:bg-gray-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap" data-target="disclaimer">Disclaimer</button>
             </div>
         </div>
 
@@ -139,12 +138,6 @@
                     </div>
                     <span class="font-medium">Terms of Service</span>
                 </button>
-                <button onclick="switchTab('disclaimer')" class="desktop-tab-btn w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 hover:bg-white dark:hover:bg-dark-surface hover:shadow-sm text-slate-600 dark:text-slate-400 border border-transparent border-l-4 hover:border-gray-200 dark:hover:border-dark-border" data-target="disclaimer">
-                    <div class="w-8 h-8 rounded-md bg-gray-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </div>
-                    <span class="font-medium">Disclaimer</span>
-                </button>
             </div>
 
             <!-- Content Area -->
@@ -158,45 +151,76 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Company Name</label>
-                                <input type="text" placeholder="e.g. Acme Corp Inc." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400">
+                                <input type="text" id="companyName" placeholder="e.g. Acme Corp Inc." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Website URL</label>
-                                <input type="url" placeholder="https://example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400">
+                                <input type="url" id="websiteUrl" placeholder="https://example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Contact Email</label>
-                                <input type="email" placeholder="legal@example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400">
+                                <input type="email" id="contactEmail" placeholder="legal@example.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Country</label>
-                                <select class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all">
-                                    <option>United States</option>
-                                    <option>United Kingdom</option>
-                                    <option>Canada</option>
-                                    <option>Australia</option>
-                                    <option>European Union</option>
-                                </select>
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Jurisdiction</label>
+                                <input type="text" id="jurisdiction" placeholder="New York, USA" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all placeholder-slate-400" oninput="updateDoc()">
                             </div>
                         </div>
 
-                        <div class="mt-8 flex justify-end">
-                            <button class="px-6 py-2.5 bg-slate-900 dark:bg-brand-600 hover:bg-slate-800 dark:hover:bg-brand-500 text-white font-medium rounded-lg transition-all shadow-lg shadow-slate-900/20 dark:shadow-brand-500/20 flex items-center gap-2">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Preview
-                            </button>
+                        <div class="mt-6 flex flex-wrap gap-4">
+                             <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="cookies" class="sr-only peer" onchange="updateDoc()">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 dark:peer-focus:ring-brand-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
+                                <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Cookies</span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="ads" class="sr-only peer" onchange="updateDoc()">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 dark:peer-focus:ring-brand-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
+                                <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Ads</span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="payments" class="sr-only peer" onchange="updateDoc()">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 dark:peer-focus:ring-brand-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
+                                <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Payments</span>
+                            </label>
                         </div>
                     </div>
 
                     <!-- Preview Area with Paywall -->
                     <div class="relative bg-gray-50 dark:bg-[#0b1120] min-h-[400px]">
                         
-                        <!-- The Content (Blurred behind paywall) -->
-                        <div class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500" id="preview-content">
-                            <p class="mb-4"><span class="font-bold text-slate-800 dark:text-slate-200">1. Introduction</span><br>Welcome to [Company Name] ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy...</p>
-                            <p class="mb-4"><span class="font-bold text-slate-800 dark:text-slate-200">2. Information We Collect</span><br>We collect personal information that you voluntarily provide to us when you register on the website, express an interest in obtaining information about us or our products and services...</p>
-                            <p class="mb-4"><span class="font-bold text-slate-800 dark:text-slate-200">3. How We Use Your Information</span><br>We use personal information collected via our website for a variety of business purposes described below. We process your personal information for these purposes in reliance on our legitimate business interests...</p>
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                            <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident...</p>
+                        <!-- Content Containers -->
+                        <div id="preview-container" class="p-8 font-mono text-sm leading-relaxed text-slate-600 dark:text-slate-400 select-none filter blur-[4px] opacity-70 transition-all duration-500">
+                            
+                            <!-- Privacy Policy -->
+                            <div id="privacy-content">
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">PRIVACY POLICY</h1>
+                                <p class="mb-4">Last Updated: <span id="date"></span></p>
+                                <p class="mb-4">This Privacy Policy describes how <span class="font-bold text-brand-600 company-fill">[Company]</span> collects, uses, and discloses your personal information when you visit our website <span class="font-bold text-brand-600 url-fill">[URL]</span>.</p>
+                                
+                                <div id="cookies-section" class="hidden">
+                                    <h2 class="font-bold mt-4">1. Cookies</h2>
+                                    <p>We use cookies to improve your experience.</p>
+                                </div>
+                                <div id="ads-section" class="hidden">
+                                    <h2 class="font-bold mt-4">2. Advertising</h2>
+                                    <p>We work with third-party ad partners.</p>
+                                </div>
+                                <div id="payments-section" class="hidden">
+                                    <h2 class="font-bold mt-4">3. Payments</h2>
+                                    <p>We process payments securely via Stripe/PayPal.</p>
+                                </div>
+                            </div>
+
+                            <!-- Terms of Service -->
+                            <div id="terms-content" class="hidden">
+                                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">TERMS OF SERVICE</h1>
+                                <p class="mb-4">Last Updated: <span id="date-terms"></span></p>
+                                <p class="mb-4">By accessing <span class="font-bold text-brand-600 url-fill">[URL]</span>, you agree to be bound by these Terms of Service.</p>
+                                <h2 class="font-bold mt-4">1. License</h2>
+                                <p>Permission is granted to temporarily download one copy of the materials on <span class="font-bold text-brand-600 company-fill">[Company]</span>'s website.</p>
+                            </div>
+
                         </div>
 
                         <!-- Professional Frosted Glass Paywall Overlay -->
@@ -211,12 +235,12 @@
                                 </p>
                                 
                                 <div class="space-y-3">
-                                    <button class="w-full py-3 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold rounded-xl shadow-lg shadow-brand-500/40 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 group">
-                                        <span>Unlock Now for $29</span>
+                                    <button onclick="downloadPDF()" class="w-full py-3 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold rounded-xl shadow-lg shadow-brand-500/40 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 group">
+                                        <span>Unlock Now for $19</span>
                                         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                                     </button>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-4">
-                                        <i class="fa-solid fa-shield-halved mr-1"></i> 30-day money-back guarantee
+                                        <i class="fa-solid fa-shield-halved mr-1"></i> Secure 256-bit SSL Encryption
                                     </p>
                                 </div>
                             </div>
@@ -227,13 +251,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="mt-auto bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-dark-border py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-500 dark:text-slate-400 text-sm">© 2024 LegalShield Generator. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script>
         // Dark Mode Logic
@@ -247,8 +264,6 @@
                 localStorage.setItem('theme', 'dark');
             }
         }
-
-        // Initialize Theme from LocalStorage or System Pref
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -257,7 +272,6 @@
 
         // Tab Switching Logic
         function switchTab(tabId) {
-            // Update Title
             const titles = {
                 'privacy': 'Configure Privacy Policy',
                 'terms': 'Configure Terms of Service',
@@ -265,54 +279,91 @@
             };
             document.getElementById('section-title').textContent = titles[tabId];
 
-            // Update Mobile Buttons
+            const privacy = document.getElementById('privacy-content');
+            const terms = document.getElementById('terms-content');
+            
+            if (tabId === 'terms') {
+                privacy.classList.add('hidden');
+                terms.classList.remove('hidden');
+            } else if (tabId === 'privacy') {
+                terms.classList.add('hidden');
+                privacy.classList.remove('hidden');
+            }
+
+            // Update Buttons State
             document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
                 if (btn.dataset.target === tabId) {
-                    btn.classList.add('bg-brand-600', 'text-white', 'shadow-md');
-                    btn.classList.remove('bg-white', 'dark:bg-dark-surface', 'text-slate-600', 'dark:text-slate-300', 'border');
+                    btn.classList.add('bg-brand-600', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-600');
                 } else {
-                    btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
-                    btn.classList.add('bg-white', 'dark:bg-dark-surface', 'text-slate-600', 'dark:text-slate-300', 'border');
+                    btn.classList.remove('bg-brand-600', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-600');
                 }
             });
-
-            // Update Desktop Buttons
+            
             document.querySelectorAll('.desktop-tab-btn').forEach(btn => {
-                const iconBox = btn.querySelector('div');
-                const icon = btn.querySelector('i');
-                
                 if (btn.dataset.target === tabId) {
-                    // Active State
-                    btn.classList.add('bg-white', 'dark:bg-dark-surface', 'shadow-sm', 'border-l-brand-600');
-                    btn.classList.remove('border-transparent', 'hover:bg-white', 'hover:shadow-sm');
-                    
-                    // Icon Active
-                    iconBox.classList.remove('bg-gray-100', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400');
-                    iconBox.classList.add('bg-brand-100', 'dark:bg-brand-900/30', 'text-brand-600', 'dark:text-brand-400');
-                    
-                    // Text Active
-                    btn.querySelector('span').classList.add('text-slate-900', 'dark:text-slate-100');
+                    btn.classList.add('border-l-brand-600', 'shadow-sm');
                 } else {
-                    // Inactive State
-                    btn.classList.remove('bg-white', 'dark:bg-dark-surface', 'shadow-sm', 'border-l-brand-600');
-                    btn.classList.add('border-transparent', 'hover:bg-white', 'hover:shadow-sm');
-                    
-                    // Icon Inactive
-                    iconBox.classList.add('bg-gray-100', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400');
-                    iconBox.classList.remove('bg-brand-100', 'dark:bg-brand-900/30', 'text-brand-600', 'dark:text-brand-400');
-                    
-                    // Text Inactive
-                    btn.querySelector('span').classList.remove('text-slate-900', 'dark:text-slate-100');
+                    btn.classList.remove('border-l-brand-600', 'shadow-sm');
                 }
             });
-
-            // Simulate content refresh (for UX feel)
-            const preview = document.getElementById('preview-content');
-            preview.style.opacity = '0.4';
-            setTimeout(() => {
-                preview.style.opacity = '0.7';
-            }, 200);
         }
+
+        // Auto-Save & Update
+        function updateDoc() {
+            const company = document.getElementById('companyName').value || '[Company]';
+            const url = document.getElementById('websiteUrl').value || '[URL]';
+            
+            document.querySelectorAll('.company-fill').forEach(el => el.innerText = company);
+            document.querySelectorAll('.url-fill').forEach(el => el.innerText = url);
+
+            // Toggles
+            document.getElementById('cookies-section').classList.toggle('hidden', !document.getElementById('cookies').checked);
+            document.getElementById('ads-section').classList.toggle('hidden', !document.getElementById('ads').checked);
+            document.getElementById('payments-section').classList.toggle('hidden', !document.getElementById('payments').checked);
+
+            saveProgress();
+        }
+
+        function saveProgress() {
+            const data = {
+                company: document.getElementById('companyName').value,
+                url: document.getElementById('websiteUrl').value,
+                email: document.getElementById('contactEmail').value,
+                jurisdiction: document.getElementById('jurisdiction').value,
+                cookies: document.getElementById('cookies').checked,
+                ads: document.getElementById('ads').checked,
+                payments: document.getElementById('payments').checked
+            };
+            localStorage.setItem('legalShieldData', JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('legalShieldData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('companyName').value = data.company || '';
+                document.getElementById('websiteUrl').value = data.url || '';
+                document.getElementById('contactEmail').value = data.email || '';
+                document.getElementById('jurisdiction').value = data.jurisdiction || '';
+                document.getElementById('cookies').checked = data.cookies || false;
+                document.getElementById('ads').checked = data.ads || false;
+                document.getElementById('payments').checked = data.payments || false;
+                updateDoc();
+            }
+            // Set Date
+            const today = new Date().toLocaleDateString();
+            document.getElementById('date').innerText = today;
+            document.getElementById('date-terms').innerText = today;
+        }
+
+        function downloadPDF() {
+            alert("Redirecting to secure payment ($19)...");
+            // Stripe Link goes here
+        }
+
+        window.addEventListener('load', loadProgress);
     </script>
 </body>
 </html>
