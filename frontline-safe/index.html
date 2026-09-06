@@ -1,1 +1,106 @@
-<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#07090b"><meta http-equiv="Cache-Control" content="no-store,no-cache,must-revalidate,max-age=0"><title>FRONTLINE — Safe Canvas Build 1.2</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;background:#050709;color:#fff;font-family:Arial,sans-serif;overflow:hidden}main{height:100%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 42%,#1a252b,#050709 68%)}.wrap{width:min(540px,86vw)}.logo{font-size:94px;font-weight:950;color:#eda049;filter:drop-shadow(0 12px 28px #000)}h1{direction:ltr;margin:8px 0 4px;font-size:clamp(30px,7vw,56px);letter-spacing:-.06em}p{margin:0;color:#8e9a9e;font:800 10px Arial;letter-spacing:.18em;direction:ltr}.bar{height:3px;margin:28px auto 12px;background:#ffffff20;overflow:hidden}.bar i{display:block;width:24%;height:100%;background:#eda049;animation:l 1.05s ease-in-out infinite}small{display:block;color:#b1babd;line-height:1.6}.mode{margin-top:7px;color:#d69b61;font-size:11px;font-weight:800}@keyframes l{from{transform:translateX(-120%)}to{transform:translateX(520%)}}</style></head><body><main><div class="wrap"><div class="logo">F</div><h1>FRONTLINE: MIDDLE EAST</h1><p>SAFE CANVAS BUILD 1.2</p><div class="bar"><i></i></div><small id="s">מנקה את מטמון הגרסה הישנה…</small><div class="mode">NO WEBGL OR WEBGL2 REQUIRED</div></div></main><script>(async()=>{const s=document.getElementById('s');try{if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.map(r=>r.unregister()))}if('caches'in window){const names=await caches.keys();await Promise.all(names.map(n=>caches.delete(n)))}const base='../frontline-middle-east/';const files=['v04-01.dat','v04-02a.dat','v04-02b.dat','v04-03.dat','v04-04.dat','v04-05.dat','v04-06.dat'],parts=[];for(let i=0;i<files.length;i++){s.textContent=`טוען מצב בטוח ${Math.round(i/files.length*100)}%`;const r=await fetch(base+files[i]+'?safe=1.2.1&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(files[i]+': HTTP '+r.status);parts.push(await r.text())}const b=atob(parts.join('').replace(/\s/g,'')),u=Uint8Array.from(b,c=>c.charCodeAt(0));if(!('DecompressionStream'in window))throw Error('נדרש Chrome או Edge מעודכן לצורך פתיחת קובץ המשחק');const stream=new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'));let page=await new Response(stream).text();page=page.replace('</body>','<div style="position:fixed;left:14px;bottom:12px;z-index:9999;padding:7px 10px;border:1px solid #ffffff2a;border-radius:7px;background:#06090be8;color:#d5a16d;font:800 9px Arial;direction:ltr">SAFE CANVAS MODE · NO WEBGL2</div></body>');document.open();document.write(page);document.close()}catch(e){console.error(e);s.textContent='טעינת מצב התאימות נכשלה: '+e.message}})()</script></body></html>
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="theme-color" content="#070b0e" />
+  <meta http-equiv="Cache-Control" content="no-store,no-cache,must-revalidate,max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <title>Frontline: Middle East — Safe Canvas Build 1.2.2</title>
+  <link rel="stylesheet" href="style.css?v=1.2.2" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="gameCanvas" aria-label="משחק יריות גוף ראשון"></canvas>
+
+    <div id="bootScreen" class="boot-screen">
+      <div class="boot-mark">FRONTLINE</div>
+      <div class="boot-line"><span></span></div>
+      <small id="bootStatus">SAFE CANVAS RENDERER · NO WEBGL REQUIRED</small>
+    </div>
+
+    <section id="mainMenu" class="overlay menu-card hidden">
+      <div class="menu-topline">
+        <div class="eyebrow">SAFE BUILD 1.2.2 · CANVAS RENDERER</div>
+        <div class="live-badge"><i></i> READY</div>
+      </div>
+      <h1>FRONTLINE<br><span>MIDDLE EAST</span></h1>
+      <p class="lead">גרסת התאימות המלאה אינה משתמשת ב־WebGL או ב־WebGL2: כוונת, החלקה, רימונים, שני כלי נשק, אויבים טקטיים, תגבורות ושלוש חזיתות.</p>
+
+      <div class="section-label">בחר חזית</div>
+      <div id="missionList" class="mission-list">
+        <button class="mission active" data-level="south"><b>החזית הדרומית</b><span>רובע חופי צפוף · לחימה מטווח קצר</span><em>OPERATION SANDGLASS</em></button>
+        <button class="mission" data-level="north"><b>החזית הצפונית</b><span>עיירת גבעות · קווי ראייה משתנים</span><em>OPERATION CEDAR</em></button>
+        <button class="mission" data-level="east"><b>החזית המזרחית</b><span>מתחם תעשייתי · קרבות לטווח בינוני</span><em>OPERATION ANVIL</em></button>
+      </div>
+
+      <div class="section-label">רמת קושי</div>
+      <div id="difficultyList" class="difficulty-list">
+        <button data-difficulty="regular">רגיל<small>מאוזן ונגיש</small></button>
+        <button class="active" data-difficulty="hardened">קשוח<small>AI מהיר וטקטי</small></button>
+        <button data-difficulty="veteran">ותיק<small>מעט מקום לטעויות</small></button>
+      </div>
+
+      <button id="startButton" class="primary"><span>התחל משימה</span><kbd>ENTER</kbd></button>
+      <div class="controls-line">WASD תנועה · עכבר כיוון · קליק ירי · קליק ימני כוונת · Shift ריצה · Ctrl החלקה · G רימון · 1/2 החלפת נשק</div>
+      <p class="disclaimer">כל המפות והמשימות הן המחשה בדיונית. אין במשחק שחזור של מתקנים צבאיים, מטרות אזרחיות או תשתיות רגישות.</p>
+    </section>
+
+    <section id="pauseMenu" class="overlay compact hidden">
+      <div class="eyebrow">TACTICAL PAUSE</div><h2>המשחק מושהה</h2>
+      <button id="resumeButton" class="primary">המשך</button>
+      <button id="fullscreenButton">מסך מלא</button>
+      <button id="qualityButton">איכות: גבוהה</button>
+      <button id="restartButton">התחל מחדש</button>
+      <button id="backButton">חזרה לתפריט</button>
+    </section>
+
+    <section id="resultMenu" class="overlay compact hidden">
+      <div id="resultKicker" class="eyebrow">MISSION COMPLETE</div><h2 id="resultTitle">המשימה הושלמה</h2>
+      <p id="resultStats"></p><div id="resultMedals" class="result-medals"></div>
+      <button id="resultRestart" class="primary">שחק שוב</button><button id="resultBack">בחירת חזית</button>
+    </section>
+
+    <div id="interactionPrompt" class="prompt hidden"><strong>E</strong><span id="interactionText">אינטראקציה</span><div class="hold-track"><i id="interactionProgress"></i></div></div>
+    <div id="toast" class="toast hidden"></div><div id="killFeed" class="kill-feed"></div><div id="subtitle" class="subtitle hidden"></div>
+  </main>
+  <div id="safeBadge">SAFE CANVAS MODE · NO WEBGL2</div>
+
+  <script>
+  window.IMPORTED_LEVEL = null;
+  (async () => {
+    const status = document.getElementById('bootStatus');
+    try {
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map(registration => registration.unregister()));
+      }
+      if ('caches' in window) {
+        const names = await caches.keys();
+        await Promise.all(names.map(name => caches.delete(name)));
+      }
+
+      const base = '../frontline-middle-east/';
+      const files = ['v04-01.dat','v04-02a.dat','v04-02b.dat','v04-03.dat','v04-04.dat','v04-05.dat','v04-06.dat'];
+      const parts = [];
+      for (let index = 0; index < files.length; index++) {
+        status.textContent = `LOADING SAFE CANVAS ENGINE · ${Math.round(index / files.length * 100)}%`;
+        const response = await fetch(`${base}${files[index]}?safe=1.2.2&t=${Date.now()}`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`${files[index]}: HTTP ${response.status}`);
+        parts.push(await response.text());
+      }
+
+      const binary = atob(parts.join('').replace(/\s+/g, ''));
+      const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
+      if (!('DecompressionStream' in window)) throw new Error('נדרש Chrome או Edge מעודכן לפתיחת קובץ המשחק');
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+      const code = await new Response(stream).text();
+      (0, eval)(code);
+    } catch (error) {
+      console.error(error);
+      document.body.innerHTML = `<main style="min-height:100vh;display:grid;place-items:center;background:#050709;color:white;font-family:Arial;text-align:center;padding:30px"><div><h1>טעינת מצב התאימות נכשלה</h1><p>${String(error.message || error)}</p><button onclick="location.reload()" style="padding:10px 16px">נסה שוב</button></div></main>`;
+    }
+  })();
+  </script>
+</body>
+</html>
