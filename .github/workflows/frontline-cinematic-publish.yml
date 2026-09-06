@@ -1,0 +1,56 @@
+name: Publish Frontline Cinematic Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/frontline-cinematic-publish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download verified Cinematic Build
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 10 --retry-delay 3 \
+            'https://frontline-cinematic-mork.serveo.net/site.tar.gz' \
+            --output /tmp/frontline-site.tar.gz
+          rm -rf /tmp/frontline-site
+          mkdir -p /tmp/frontline-site
+          tar -xzf /tmp/frontline-site.tar.gz -C /tmp/frontline-site
+          test -f /tmp/frontline-site/site/index.html
+          test -f /tmp/frontline-site/site/engine.js
+          test -f /tmp/frontline-site/site/content.js
+          test -f /tmp/frontline-site/site/game.js
+          node --check /tmp/frontline-site/site/engine.js
+          node --check /tmp/frontline-site/site/content.js
+          node --check /tmp/frontline-site/site/game.js
+
+      - name: Replace public game build
+        run: |
+          set -euo pipefail
+          rm -rf frontline-middle-east
+          mv /tmp/frontline-site/site frontline-middle-east
+          touch frontline-middle-east/.nojekyll
+
+      - name: Commit Cinematic Build 3.0
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A frontline-middle-east
+          if git diff --cached --quiet; then
+            echo 'No changes to publish'
+            exit 0
+          fi
+          git commit -m 'Deploy FRONTLINE Cinematic Build 3.0'
+          git push origin HEAD:main
